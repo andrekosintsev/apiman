@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: postgresag
-          image: youngkoss/postgresag:latest
+          image: youngkoss/postgres.1.2.9:ag
           imagePullPolicy: Always
           ports:
             - containerPort: 5432

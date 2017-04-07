@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: postgresam
-          image: youngkoss/postgresam:latest
+          image: youngkoss/postgres.1.2.9:am
           imagePullPolicy: Always
           ports:
             - containerPort: 5432
