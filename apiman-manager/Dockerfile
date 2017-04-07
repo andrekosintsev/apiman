@@ -18,10 +18,10 @@ RUN rm -f $JBOSS_HOME/standalone/deployments/apiman-gateway.war
 RUN rm -f $JBOSS_HOME/standalone/deployments/apiman-ds.xml
 
 # Postgres
-ADD postgresql-9.3-1102.jdbc41.jar $JBOSS_HOME/standalone/deployments
+ADD postgresql-9.3-1102-jdbc41.jar $JBOSS_HOME/standalone/deployments
 
-# Add apiman-ds.xml.xml
-ADD apiman-ds.xml $JBOSS_HOME/standalone/deployments
+# Add apiman-ds_postgresql.xml
+ADD apiman-ds_postgresql.xml $JBOSS_HOME/standalone/deployments
 
 # Add modules.xml.xml
 ADD modules.xml $JBOSS_HOME/standalone/deployments
