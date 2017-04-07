@@ -439,7 +439,7 @@
           <secure-deployment name="apiman-gateway-api.war">
             <realm>apiman</realm>
             <resource>apiman-gateway-api</resource>
-            <credential name="secret">217b725d-7790-47a7-a3fc-5cf31f92a8db</credential>
+            <credential name="secret">2d9668f3-3f47-43b6-acd8-661c8d74eec8</credential>
             <disable-trust-manager>true</disable-trust-manager>
             <bearer-only>true</bearer-only>
             <enable-basic-auth>true</enable-basic-auth>
