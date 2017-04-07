@@ -17,6 +17,12 @@ RUN rm -f $JBOSS_HOME/standalone/deployments/apiman-es.war
 RUN rm -f $JBOSS_HOME/standalone/deployments/apiman.war
 RUN rm -f $JBOSS_HOME/standalone/deployments/apimanui.war
 
+# Add standalone-apiman.xml
+ADD standalone-apiman.xml $JBOSS_HOME/standalone/configuration/
+
+# Apiman properties
+ADD apiman.properties $JBOSS_HOME/standalone/configuration/
+
 # Postgres
 ADD postgresql-9.3-1102-jdbc41.jar $JBOSS_HOME/standalone/deployments
 
@@ -25,12 +31,6 @@ ADD apiman_gw-ds_postgresql.xml $JBOSS_HOME/standalone/deployments
 
 # Add modules.xml.xml
 ADD modules.xml $HOME/standalone/deployments
-
-# Add standalone-apiman.xml
-ADD standalone-apiman.xml $JBOSS_HOME/standalone/configuration/
-
-# Apiman properties
-ADD apiman.properties $JBOSS_HOME/standalone/configuration/
 
 # Set the default command to run on boot
 ENTRYPOINT ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "-c", "standalone-apiman.xml"]
