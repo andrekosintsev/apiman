@@ -12,9 +12,9 @@ RUN cd $JBOSS_HOME \
  && bsdtar -xf apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip \
  && rm apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip
 
-RUN rm -f $JBOSS_HOME/sstandalone/deployments/apiman-es.war
-RUN rm -f $JBOSS_HOME/sstandalone/deployments/apiman-gateway-api.war
-RUN rm -f $JBOSS_HOME/sstandalone/deployments/apiman-gateway.war
+RUN rm -f $JBOSS_HOME/standalone/deployments/apiman-es.war
+RUN rm -f $JBOSS_HOME/standalone/deployments/apiman-gateway-api.war
+RUN rm -f $JBOSS_HOME/standalone/deployments/apiman-gateway.war
 RUN rm -f $JBOSS_HOME/standalone/deployments/apiman-ds.xml
 
 # Postgres
