@@ -450,7 +450,7 @@
             <resource>apimanui</resource>
             <credential name="secret">da0376a3-5471-418d-9b3a-7673d16126ac</credential>
             <disable-trust-manager>true</disable-trust-manager>
-            <public-client>true</public-client>
+            <!--<public-client>true</public-client>-->
           </secure-deployment>
         </subsystem>
     </profile>
