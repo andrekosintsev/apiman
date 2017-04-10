@@ -440,7 +440,7 @@
           <secure-deployment name="apiman.war">
             <realm>apiman</realm>
             <resource>apiman</resource>
-            <credential name="secret">517d3e9a-d894-4ca7-a705-109cfe1b9f10</credential>
+            <credential name="secret">1472c42d-77aa-4964-a785-66bacd471650</credential>
             <disable-trust-manager>true</disable-trust-manager>
             <bearer-only>true</bearer-only>
             <enable-basic-auth>true</enable-basic-auth>
@@ -448,7 +448,7 @@
           <secure-deployment name="apimanui.war">
             <realm>apiman</realm>
             <resource>apimanui</resource>
-            <credential name="secret">da0376a3-5471-418d-9b3a-7673d16126ac</credential>
+            <credential name="secret">39f8ca83-4c81-44ec-bd60-1b08c367c638</credential>
             <disable-trust-manager>true</disable-trust-manager>
             <!--<public-client>true</public-client>-->
           </secure-deployment>

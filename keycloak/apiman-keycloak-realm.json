@@ -74,18 +74,18 @@
         {
             "name" : "apimanui",
             "enabled" : true,
-            "baseUrl" : "/apimanui",
+            "baseUrl" : "http://apimanui",
             "redirectUris" : [
-                "/apimanui/*"
+                "http://apimanui/*"
             ],
             "secret" : "password"
         },
         {
             "name" : "apiman",
             "enabled" : true,
-            "baseUrl" : "/apiman",
+            "baseUrl" : "http://apiman",
             "redirectUris" : [
-                "/apiman/*"
+                "http://apiman/*"
             ],
             "secret" : "password",
             "webOrigins" : [ "*" ]
@@ -93,9 +93,9 @@
         {
             "name" : "apiman-gateway-api",
             "enabled" : true,
-            "baseUrl" : "/apiman-gateway-api",
+            "baseUrl" : "http://apiman-gateway-api",
             "redirectUris" : [
-                "/apiman-gateway-api/*"
+                "http://apiman-gateway-api/*"
             ],
             "secret" : "password",
             "directGrantsOnly" : true,
