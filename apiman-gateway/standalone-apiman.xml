@@ -430,9 +430,8 @@
         <subsystem xmlns="urn:jboss:domain:weld:3.0"/>
         <subsystem xmlns="urn:jboss:domain:keycloak:1.1">
           <realm name="apiman">
-            <realm-public-key>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCrVrCuTtArbgaZzL1hvh0xtL5mc7o0NqPVnYXkLvgcwiC3BjLGw1tGEGoJaXDuSaRllobm53JBhjx33UNv+5z/UMG4kytBWxheNVKnL6GgqlNabMaFfPLPCF8kAgKnsi79NMo+n6KnSY8YeUmec/p2vjO2NjsSAVcWEQMVhJ31LwIDAQAB</realm-public-key>
-             <!--<auth-server-url>http://localhost:9095/auth</auth-server-url>-->
-            <auth-server-url>http://keycloak/auth</auth-server-url>
+            <realm-public-key>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCrVrCuTtArbgaZzL1hvh0xtL5mc7o0NqPVnYXkLvgcwiC3BjLGw1tGEGoJaXDuSaRllobm53JBhjx33UNv+5z/UMG4kytBWxheNVKnL6GgqlNabMaFfPLPCF8kAgKnsi79NMo+n6KnSY8YeUmec/p2vjO2NjsSAVcWEQMVhJ31LwIDAQAB/realm-public-key>
+            <auth-server-url>/auth</auth-server-url>
             <ssl-required>none</ssl-required>
             <enable-cors>false</enable-cors>
             <principal-attribute>preferred_username</principal-attribute>
@@ -440,7 +439,7 @@
           <secure-deployment name="apiman-gateway-api.war">
             <realm>apiman</realm>
             <resource>apiman-gateway-api</resource>
-            <credential name="secret">8fa14b0f-9b8d-4f6d-afbe-f8e1471c7285  </credential>
+            <credential name="secret">217b725d-7790-47a7-a3fc-5cf31f92a8db</credential>
             <disable-trust-manager>true</disable-trust-manager>
             <bearer-only>true</bearer-only>
             <enable-basic-auth>true</enable-basic-auth>
