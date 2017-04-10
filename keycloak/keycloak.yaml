@@ -8,7 +8,7 @@ spec:
   ports:
     - port: 80
       name: http
-      targetPort: 9095
+      targetPort: 8080
     - port: 443
       name: https
       targetPort: 8443
@@ -48,7 +48,7 @@ spec:
           image: webalexx/keyloack
           imagePullPolicy: Always
           ports:
-            - containerPort: 9095
+            - containerPort: 8080
               name: keycloak
           env:
               - name: POSTGRES_DATABASE
