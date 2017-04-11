@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <datasources>
   <datasource jndi-name="java:jboss/datasources/apiman-gateway" pool-name="apiman-gateway" enabled="true" use-java-context="true">
-    <connection-url>jdbc:postgresql://10.0.0.138:5432/apiman_gateway</connection-url>
+    <connection-url>jdbc:postgresql://10.0.2.17:5432/apiman_gateway</connection-url>
     <driver>postgresql-9.3-1102-jdbc41.jar</driver>
     <pool>
       <max-pool-size>30</max-pool-size>
     </pool>
     <security>
-      <user-name>apiman</user-name>
-      <password>apiman_gateway</password>
+      <user-name>apiman_gateway</user-name>
+      <password>staging123</password>
     </security>
   </datasource>
 </datasources>
