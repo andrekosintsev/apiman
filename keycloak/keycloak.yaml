@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
         - name: keycloak
-          image: youngkoss/keycloak
+          image: jboss/keycloak-postgres
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
