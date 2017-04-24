@@ -18,6 +18,7 @@ RUN mkdir apiman
 RUN cd apiman
 RUN mkdir plugins
 RUN cd $HOME
+RUN ls
 COPY apiman-plugins-config-policy.zip .m2/repository/io/apiman/plugins \ && bsdtar -xf apiman-plugins-config-policy.zip \ && rm apiman-plugins-config-policy.zip
 
 RUN cd $JBOSS_HOME \
