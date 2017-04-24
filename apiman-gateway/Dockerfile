@@ -7,6 +7,19 @@ ENV APIMAN_VERSION 1.2.9.Final
 
 RUN $JBOSS_HOME/bin/add-user.sh admin admin123! --silent
 
+RUN cd $HOME
+RUN mkdir .m2
+RUN cd .m2
+RUN mkdir repository
+RUN cd repository
+RUN mkdir io
+RUN cd io
+RUN mkdir apiman
+RUN cd apiman
+RUN mkdir plugins
+RUN cd plugins
+ADD apiman-plugins-config-policy.zip $HOME/.m2/repository/io/apiman/plugins \ && bsdtar -xf apiman-plugins-config-policy.zip \ && rm apiman-plugins-config-policy.zip
+
 RUN cd $JBOSS_HOME \
  && curl http://downloads.jboss.org/overlord/apiman/$APIMAN_VERSION/apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip -o apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip \
  && bsdtar -xf apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip \
@@ -16,6 +29,7 @@ RUN rm -f $JBOSS_HOME/standalone/deployments/apiman-ds.xml
 RUN rm -f $JBOSS_HOME/standalone/deployments/apiman-es.war
 RUN rm -f $JBOSS_HOME/standalone/deployments/apiman.war
 RUN rm -f $JBOSS_HOME/standalone/deployments/apimanui.war
+
 
 # Add standalone-apiman.xml
 ADD standalone-apiman.xml $JBOSS_HOME/standalone/configuration/
