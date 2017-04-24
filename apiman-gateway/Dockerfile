@@ -9,8 +9,8 @@ RUN $JBOSS_HOME/bin/add-user.sh admin admin123! --silent
 
 #RUN mkdir -p $HOME/.m2/repository/io/apiman/plugins
 
-RUN cd $HOME \ 
-ADD m2.zip  $HOME/ \ && bsdtar -xf m2.zip \ && rm m2.zip
+ADD m2.zip  $HOME/ 
+RUN cd $HOME \ && bsdtar -xf m2.zip \ && rm m2.zip
 ENV MAVEN_CONFIG "$HOME/.m2"
 
 RUN cd $JBOSS_HOME \
