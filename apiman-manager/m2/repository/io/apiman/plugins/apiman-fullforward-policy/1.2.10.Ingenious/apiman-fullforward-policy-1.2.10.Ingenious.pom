@@ -7,9 +7,9 @@
     <version>1.2.10.Ingenious</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-  <artifactId>apiman-plugins-config-policy</artifactId>
+  <artifactId>apiman-fullforward-policy</artifactId>
   <packaging>war</packaging>
-  <name>apiman-plugins-config-policy</name>
+  <name>apiman-fullforward-policy</name>
 
   <dependencies>
     <!-- apiman dependencies (must be excluded from the WAR) -->
