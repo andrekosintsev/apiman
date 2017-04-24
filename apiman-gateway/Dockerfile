@@ -10,7 +10,7 @@ RUN $JBOSS_HOME/bin/add-user.sh admin admin123! --silent
 RUN mkdir -p $HOME/.m2/repository/io/apiman/plugins
 RUN cd $HOME
 RUN ls
-COPY apiman-plugins-config-policy.zip .m2/repository/io/apiman/plugins \ && bsdtar -xf apiman-plugins-config-policy.zip \ && rm apiman-plugins-config-policy.zip
+COPY apiman-plugins-config-policy.zip ~HOME/.m2/repository/io/apiman/plugins \ && bsdtar -xf apiman-plugins-config-policy.zip \ && rm apiman-plugins-config-policy.zip
 
 RUN cd $JBOSS_HOME \
  && curl http://downloads.jboss.org/overlord/apiman/$APIMAN_VERSION/apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip -o apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip \
