@@ -8,7 +8,7 @@ ENV APIMAN_VERSION 1.2.9.Final
 RUN $JBOSS_HOME/bin/add-user.sh admin admin123! --silent
 
 RUN mkdir -p $HOME/.m2/repository/io/apiman/plugins
-RUN mkdir cd $HOME
+RUN cd $HOME
 RUN ls
 COPY apiman-plugins-config-policy.zip .m2/repository/io/apiman/plugins \ && bsdtar -xf apiman-plugins-config-policy.zip \ && rm apiman-plugins-config-policy.zip
 
