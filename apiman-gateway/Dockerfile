@@ -26,9 +26,9 @@ ADD apiman.properties $JBOSS_HOME/standalone/configuration/
 
 COPY m2 $HOME/.m2
 COPY .m2 $JBOSS_HOME/.m2
-RUN chown -R jboss:jboss /opt/jboss/.m2
-RUN chown -R jboss:jboss $JBOSS_HOME/.m2
-RUN chown -R jboss:jboss /opt/jboss/wildfly/standalone/configuration/apiman.properties
+#RUN chown -R jboss:jboss /opt/jboss/.m2
+#RUN chown -R jboss:jboss $JBOSS_HOME/.m2
+#RUN chown -R jboss:jboss /opt/jboss/wildfly/standalone/configuration/apiman.properties
 
 # Postgres
 ADD postgresql-9.3-1102-jdbc41.jar $JBOSS_HOME/standalone/deployments
