@@ -9,7 +9,7 @@ RUN $JBOSS_HOME/bin/add-user.sh admin admin123! --silent
 
 #ADD m2.zip $HOME/
 COPY m2 $HOME/m2
-RUN mv m2 .m2
+RUN cd $HOME \  && mv m2 .m2
 
 RUN cd $JBOSS_HOME \
  && curl http://downloads.jboss.org/overlord/apiman/$APIMAN_VERSION/apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip -o apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip \
