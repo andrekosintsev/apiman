@@ -9,7 +9,7 @@ RUN $JBOSS_HOME/bin/add-user.sh admin admin123! --silent
 
 #RUN mkdir -p $HOME/.m2/repository/io/apiman/plugins
 
-ADD m2.zip $HOME/ 
+COPY m2.zip $HOME/ 
 RUN cd $HOME 
 RUN ls 
 RUN bsdtar -xf m2.zip \ && rm m2.zip
