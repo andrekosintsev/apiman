@@ -17,8 +17,8 @@ RUN cd io
 RUN mkdir apiman
 RUN cd apiman
 RUN mkdir plugins
-RUN cd plugins
-ADD apiman-plugins-config-policy.zip $HOME/.m2/repository/io/apiman/plugins \ && bsdtar -xf apiman-plugins-config-policy.zip \ && rm apiman-plugins-config-policy.zip
+RUN cd $HOME
+COPY apiman-plugins-config-policy.zip $HOME/.m2/repository/io/apiman/plugins \ && bsdtar -xf apiman-plugins-config-policy.zip \ && rm apiman-plugins-config-policy.zip
 
 RUN cd $JBOSS_HOME \
  && curl http://downloads.jboss.org/overlord/apiman/$APIMAN_VERSION/apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip -o apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip \
@@ -44,7 +44,7 @@ ADD postgresql-9.3-1102-jdbc41.jar $JBOSS_HOME/standalone/deployments
 ADD apiman-ds.xml $JBOSS_HOME/standalone/deployments
 
 # Add modules.xml.xml
-ADD modules.xml $HOME/standalone/deployments
+ADD modules.xml $JBOSS_HOME/standalone/deployments
 
 # Set the default command to run on boot
 ENTRYPOINT ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "-c", "standalone-apiman.xml"]
