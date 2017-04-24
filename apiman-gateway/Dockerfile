@@ -18,7 +18,7 @@ RUN mkdir apiman
 RUN cd apiman
 RUN mkdir plugins
 RUN cd $HOME
-COPY apiman-plugins-config-policy.zip $HOME/.m2/repository/io/apiman/plugins \ && bsdtar -xf apiman-plugins-config-policy.zip \ && rm apiman-plugins-config-policy.zip
+COPY apiman-plugins-config-policy.zip .m2/repository/io/apiman/plugins \ && bsdtar -xf apiman-plugins-config-policy.zip \ && rm apiman-plugins-config-policy.zip
 
 RUN cd $JBOSS_HOME \
  && curl http://downloads.jboss.org/overlord/apiman/$APIMAN_VERSION/apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip -o apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip \
