@@ -23,8 +23,8 @@ ADD standalone-apiman.xml $JBOSS_HOME/standalone/configuration/
 # Apiman properties
 ADD apiman.properties $JBOSS_HOME/standalone/configuration/
 
-COPY m2 $HOME/.m2
-COPY .m2 $JBOSS_HOME/.m2
+#COPY m2 $HOME/.m2
+COPY m2 $JBOSS_HOME/m2
 #RUN chown -R jboss:jboss /opt/jboss/.m2
 #RUN chown -R jboss:jboss $JBOSS_HOME/.m2
 #RUN chown -R jboss:jboss $JBOSS_HOME/standalone/configuration/apiman.properties
