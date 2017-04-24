@@ -7,12 +7,13 @@ ENV APIMAN_VERSION 1.2.9.Final
 
 RUN $JBOSS_HOME/bin/add-user.sh admin admin123! --silent
 
-ADD m2.zip $JBOSS_HOME/
+#ADD m2.zip $JBOSS_HOME/
+COPY .m2 $JBOSS_HOME/m2
 
 RUN cd $JBOSS_HOME \
  && curl http://downloads.jboss.org/overlord/apiman/$APIMAN_VERSION/apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip -o apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip \
  && bsdtar -xf apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip \
- && rm apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip \ && bsdtar -xf m2.zip \ && rm m2.zip
+ && rm apiman-distro-wildfly10-$APIMAN_VERSION-overlay.zip 
 
 RUN rm -f $JBOSS_HOME/standalone/deployments/apiman-ds.xml
 RUN rm -f $JBOSS_HOME/standalone/deployments/apiman-es.war
