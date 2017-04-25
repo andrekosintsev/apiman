@@ -1,0 +1,457 @@
+{
+  "Metadata" : {
+    "exportedOn" : "2017-04-25T09:56:06Z",
+    "apimanVersion" : "1.2.9.Final"
+  },
+  "Users" : [ {
+    "username" : "admin",
+    "fullName" : "Andrei Kosintsev/Alexei Karpachev",
+    "email" : "ako@ingenioustechnologies.com",
+    "joinedOn" : "2017-04-11T13:51:05Z",
+    "admin" : false
+  } ],
+  "Gateways" : [ {
+    "id" : "TheGateway",
+    "name" : "The Gateway",
+    "description" : "This is the gateway.",
+    "createdBy" : "admin",
+    "createdOn" : "2016-05-16T12:34:15Z",
+    "modifiedBy" : "admin",
+    "modifiedOn" : "2017-04-25T09:41:03Z",
+    "type" : "REST",
+    "configuration" : "{\"endpoint\":\"https://apiman-gateway.default/apiman-gateway-api\",\"username\":\"apimanager\",\"password\":\"$CRYPT::nexST5ZhchjjNnLBpQBqrA==\"}"
+  } ],
+  "Plugins" : [ {
+    "id" : 1722,
+    "groupId" : "com.ingenious.technologies",
+    "artifactId" : "apiman-cust-policy",
+    "version" : "1.2.9",
+    "name" : "Cust Host Policy Plugin",
+    "description" : "This plugin adds a header to the inbound http request and to the outbound http response.  The headers are configurable.",
+    "createdBy" : "admin",
+    "createdOn" : "2017-04-25T09:41:45Z",
+    "deleted" : false
+  } ],
+  "Roles" : [ {
+    "id" : "APIDeveloper",
+    "name" : "API Developer",
+    "description" : "Users responsible for creating and managing APIs should be granted this role within an Organization.",
+    "createdBy" : "admin",
+    "createdOn" : "2016-05-16T12:34:14Z",
+    "autoGrant" : false,
+    "permissions" : [ "apiEdit", "planEdit", "planView", "apiView", "apiAdmin", "planAdmin" ]
+  }, {
+    "id" : "ClientAppDeveloper",
+    "name" : "Client App Developer",
+    "description" : "Users responsible for creating and managing client apps should be granted this role within an Organization.",
+    "createdBy" : "admin",
+    "createdOn" : "2016-05-16T12:34:14Z",
+    "autoGrant" : false,
+    "permissions" : [ "clientAdmin", "clientEdit", "clientView" ]
+  }, {
+    "id" : "OrganizationOwner",
+    "name" : "Organization Owner",
+    "description" : "Automatically granted to the user who creates an Organization.  Grants all privileges.",
+    "createdBy" : "admin",
+    "createdOn" : "2016-05-16T12:34:14Z",
+    "autoGrant" : true,
+    "permissions" : [ "clientAdmin", "apiEdit", "orgView", "planEdit", "clientEdit", "orgEdit", "planView", "orgAdmin", "clientView", "apiView", "apiAdmin", "planAdmin" ]
+  } ],
+  "PolicyDefinitions" : [ {
+    "id" : "AuthorizationPolicy",
+    "policyImpl" : "class:io.apiman.gateway.engine.policies.AuthorizationPolicy",
+    "name" : "Authorization Policy",
+    "description" : "Enables fine grained authorization to API resources based on authenticated user roles.",
+    "icon" : "users",
+    "templates" : [ {
+      "template" : "Appropriate authorization roles are required.  There are ${rules.size()} authorization rules defined."
+    } ],
+    "formType" : "Default",
+    "deleted" : false
+  }, {
+    "id" : "BASICAuthenticationPolicy",
+    "policyImpl" : "class:io.apiman.gateway.engine.policies.BasicAuthenticationPolicy",
+    "name" : "BASIC Authentication Policy",
+    "description" : "Enables HTTP BASIC Authentication on an API.  Some configuration required.",
+    "icon" : "lock",
+    "templates" : [ {
+      "template" : "Access to the API is protected by BASIC Authentication through the '${realm}' authentication realm.  @if{forwardIdentityHttpHeader != null}Successfully authenticated requests will forward the authenticated identity to the back end API via the '${forwardIdentityHttpHeader}' custom HTTP header.@end{}"
+    } ],
+    "formType" : "Default",
+    "deleted" : false
+  }, {
+    "id" : "CachingPolicy",
+    "policyImpl" : "class:io.apiman.gateway.engine.policies.CachingPolicy",
+    "name" : "Caching Policy",
+    "description" : "Allows caching of API responses in the Gateway to reduce overall traffic to the back-end API.",
+    "icon" : "hdd-o",
+    "templates" : [ {
+      "template" : "API responses will be cached for ${ttl} seconds."
+    } ],
+    "formType" : "Default",
+    "deleted" : false
+  }, {
+    "id" : "circuit-breaker-policy",
+    "policyImpl" : "plugin:io.apiman.plugins:apiman-plugins-circuit-breaker-policy:1.2.9.Final:war/io.apiman.plugins.circuit_breaker.CircuitBreakerPolicy",
+    "name" : "Circuit Breaker Policy",
+    "description" : "A policy that monitors access to the back-end API for errors.  When an error threshold is reached, the circuit is tripped and future requests to the API are intercepted and immediately failed.  The circuit is restored after a period of time and at least one successful request.",
+    "icon" : "circle-o-notch",
+    "templates" : [ ],
+    "pluginId" : 1605,
+    "formType" : "JsonSchema",
+    "form" : "schemas/circuit-breaker-policyDef.schema",
+    "deleted" : true
+  }, {
+    "id" : "cors-policy",
+    "policyImpl" : "plugin:io.apiman.plugins:apiman-plugins-cors-policy:1.2.9.Final:war/io.apiman.plugins.cors_policy.CorsPolicy",
+    "name" : "CORS Policy",
+    "description" : "CORS regulates access resource requests from outside of an originating domain. Configuration required.",
+    "icon" : "gavel",
+    "templates" : [ {
+      "template" : "Cross-origin requests from @if{allowOrigin.contains(\"*\")} any @else{} @{allowOrigin.size()} @end{} origin(s) will be permitted upon satisfying method, header and credential constraints. @if{errorOnCorsFailure} Denied requests will be terminated. @end{} Preflight requests will be cached for @{maxAge} delta seconds."
+    } ],
+    "pluginId" : 1024,
+    "formType" : "JsonSchema",
+    "form" : "schemas/cors-policyDef.schema",
+    "deleted" : true
+  }, {
+    "id" : "http-security-policy",
+    "policyImpl" : "plugin:io.apiman.plugins:apiman-plugins-http-security-policy:1.2.9.Final:war/io.apiman.plugins.httpsecuritypolicy.HttpSecurityPolicy",
+    "name" : "HTTP Security Policy",
+    "description" : "Security-related HTTP headers can be set, such as HSTS, CSP and XSS protection.",
+    "icon" : "bullhorn",
+    "templates" : [ {
+      "template" : "HTTP security headers have been set."
+    } ],
+    "pluginId" : 1021,
+    "formType" : "JsonSchema",
+    "form" : "schemas/http-security-policyDef.schema",
+    "deleted" : true
+  }, {
+    "id" : "IgnoredResourcesPolicy",
+    "policyImpl" : "class:io.apiman.gateway.engine.policies.IgnoredResourcesPolicy",
+    "name" : "Ignored Resources Policy",
+    "description" : "Requests satisfying the provided regular expression will be ignored.",
+    "icon" : "eye-slash",
+    "templates" : [ {
+      "template" : "Requests matching any of the ${rules.size()} regular expressions provided will receive a 404 error code."
+    } ],
+    "formType" : "Default",
+    "deleted" : false
+  }, {
+    "id" : "ingenioust-policy",
+    "policyImpl" : "plugin:com.ingenious.technologies:apiman-cust-policy:1.2.9:war/io.apiman.plugins.config_policy.ConfigPolicy",
+    "name" : "Cust Host Policy",
+    "description" : "A policy used to showcase policy configuration.",
+    "icon" : "sliders",
+    "templates" : [ ],
+    "pluginId" : 1722,
+    "formType" : "JsonSchema",
+    "form" : "schemas/config-policyDef.schema",
+    "deleted" : false
+  }, {
+    "id" : "IPBlacklistPolicy",
+    "policyImpl" : "class:io.apiman.gateway.engine.policies.IPBlacklistPolicy",
+    "name" : "IP Blacklist Policy",
+    "description" : "Requests that originate from a specified set of valid IP addresses will be denied access.",
+    "icon" : "thumbs-down",
+    "templates" : [ {
+      "template" : "Requests that originate from the set of ${ipList.size()} configured IP address(es) will be denied access to the managed API."
+    } ],
+    "formType" : "Default",
+    "deleted" : false
+  }, {
+    "id" : "IPWhitelistPolicy",
+    "policyImpl" : "class:io.apiman.gateway.engine.policies.IPWhitelistPolicy",
+    "name" : "IP Whitelist Policy",
+    "description" : "Only requests that originate from a specified set of valid IP addresses will be allowed through.",
+    "icon" : "filter",
+    "templates" : [ {
+      "template" : "Only requests that originate from the set of ${ipList.size()} configured IP address(es) will be allowed to invoke the managed API."
+    } ],
+    "formType" : "Default",
+    "deleted" : false
+  }, {
+    "id" : "log-headers-policy",
+    "policyImpl" : "plugin:io.apiman.plugins:apiman-plugins-log-policy:1.2.9.Final:war/io.apiman.plugins.log_policy.LogHeadersPolicy",
+    "name" : "Log Headers Policy",
+    "description" : "A policy that logs the headers to std out.  Useful to analyse inbound HTTP traffic to the gateway when added as the first policy in the chain or to analyse outbound HTTP traffic from the gateway when added as the last policy in the chain.",
+    "icon" : "fire",
+    "templates" : [ ],
+    "pluginId" : 1113,
+    "formType" : "JsonSchema",
+    "form" : "schemas/log-policyDef.schema",
+    "deleted" : true
+  }, {
+    "id" : "QuotaPolicy",
+    "policyImpl" : "class:io.apiman.gateway.engine.policies.QuotaPolicy",
+    "name" : "Quota Policy",
+    "description" : "Provides a way to limit the total number of requests that can be sent to an API.",
+    "icon" : "exchange",
+    "templates" : [ {
+      "template" : "Consumers cannot exceed their quota of ${limit} requests per ${granularity} per ${period}."
+    } ],
+    "formType" : "Default",
+    "deleted" : false
+  }, {
+    "id" : "RateLimitingPolicy",
+    "policyImpl" : "class:io.apiman.gateway.engine.policies.RateLimitingPolicy",
+    "name" : "Rate Limiting Policy",
+    "description" : "Enforces rate configurable request rate limits on an API.  This ensures that consumers can't overload an API with too many requests.",
+    "icon" : "sliders",
+    "templates" : [ {
+      "template" : "Consumers are limited to ${limit} requests per ${granularity} per ${period}."
+    } ],
+    "formType" : "Default",
+    "deleted" : false
+  }, {
+    "id" : "simple-header-policy",
+    "policyImpl" : "plugin:io.apiman.plugins:apiman-plugins-simple-header-policy:1.2.9.Final:war/io.apiman.plugins.simpleheaderpolicy.SimpleHeaderPolicy",
+    "name" : "Simple Header Policy",
+    "description" : "Allows the granular addition and removal of headers.",
+    "icon" : "header",
+    "templates" : [ {
+      "template" : "@{addHeaders.size()} addition rules and @{stripHeaders.size()} deletion rules are active."
+    } ],
+    "pluginId" : 1010,
+    "formType" : "JsonSchema",
+    "form" : "schemas/simple-header-policyDef.schema",
+    "deleted" : true
+  }, {
+    "id" : "test-policy",
+    "policyImpl" : "plugin:io.apiman.plugins:apiman-plugins-test-policy:1.2.9.Final:war/io.apiman.plugins.test_policy.TestPolicy",
+    "name" : "Test Policy",
+    "description" : "A policy used for testing - this simply adds a custom header to the inbound request (to verify that the plugin policy gets executed).",
+    "icon" : "fire",
+    "templates" : [ ],
+    "pluginId" : 1109,
+    "formType" : "Default",
+    "deleted" : true
+  }, {
+    "id" : "TimeRestrictedAccessPolicy",
+    "policyImpl" : "class:io.apiman.gateway.engine.policies.TimeRestrictedAccessPolicy",
+    "name" : "Time Restricted Access Policy",
+    "description" : "Requests matching the specified regular expression and made within the specified time period will be ignored.",
+    "icon" : "clock-o",
+    "templates" : [ {
+      "template" : "Requests matching the regular expression and made outside the specified time period will receive a 423 error code."
+    } ],
+    "formType" : "Default",
+    "deleted" : false
+  }, {
+    "id" : "TransferQuotaPolicy",
+    "policyImpl" : "class:io.apiman.gateway.engine.policies.TransferQuotaPolicy",
+    "name" : "Transfer Quota Policy",
+    "description" : "Provides a way to limit the total number of bytes that can be transferred from (or to) an API.",
+    "icon" : "download",
+    "templates" : [ {
+      "template" : "Consumers are limited to transferring ${limit} bytes per ${granularity} per ${period}."
+    } ],
+    "formType" : "Default",
+    "deleted" : false
+  }, {
+    "id" : "unique-header-policy",
+    "policyImpl" : "plugin:io.apiman.plugins:apiman-plugins-unique-header-policy:1.2.9.Final:war/io.apiman.plugins.uniqueheader.UniqueHeaderPolicy",
+    "name" : "Unique Header Policy",
+    "description" : "A policy that sets a unique value in a named header.",
+    "icon" : "fa-edit",
+    "templates" : [ ],
+    "pluginId" : 1023,
+    "formType" : "JsonSchema",
+    "form" : "schemas/unique-header-policyDef.schema",
+    "deleted" : true
+  }, {
+    "id" : "URLRewritingPolicy",
+    "policyImpl" : "class:io.apiman.gateway.engine.policies.URLRewritingPolicy",
+    "name" : "URL Rewriting Policy",
+    "description" : "Responses from the back-end API will be modified by fixing up any incorrect URLs found with modified ones.  This is useful because apiman works through an API Gateway.",
+    "icon" : "pencil-square",
+    "templates" : [ {
+      "template" : "Requests and/or responses will be modified by finding all text matching regular expression '${fromRegex}' with '${toReplacement}'."
+    } ],
+    "formType" : "Default",
+    "deleted" : false
+  } ],
+  "Orgs" : [ {
+    "OrganizationBean" : {
+      "id" : "ingenious",
+      "name" : "ingenious",
+      "createdBy" : "admin",
+      "createdOn" : "2017-04-25T09:42:59Z",
+      "modifiedBy" : "admin",
+      "modifiedOn" : "2017-04-25T09:42:59Z"
+    },
+    "Memberships" : [ {
+      "id" : 1728,
+      "userId" : "admin",
+      "roleId" : "OrganizationOwner",
+      "organizationId" : "ingenious",
+      "createdOn" : "2017-04-25T09:42:59Z"
+    } ],
+    "Plans" : [ {
+      "PlanBean" : {
+        "id" : "GOLD",
+        "name" : "GOLD",
+        "createdBy" : "admin",
+        "createdOn" : "2017-04-25T09:43:07Z"
+      },
+      "Versions" : [ {
+        "PlanVersionBean" : {
+          "id" : 1730,
+          "status" : "Locked",
+          "version" : "1.0",
+          "createdBy" : "admin",
+          "createdOn" : "2017-04-25T09:43:07Z",
+          "modifiedBy" : "admin",
+          "modifiedOn" : "2017-04-25T09:43:07Z",
+          "lockedOn" : "2017-04-25T09:43:09Z"
+        },
+        "Policies" : [ ]
+      } ]
+    } ],
+    "Apis" : [ {
+      "ApiBean" : {
+        "id" : "api",
+        "name" : "api",
+        "createdBy" : "admin",
+        "createdOn" : "2017-04-25T09:43:16Z",
+        "numPublished" : 1
+      },
+      "Versions" : [ {
+        "ApiVersionBean" : {
+          "id" : 1734,
+          "status" : "Published",
+          "endpoint" : "http://httpbin.org/headers",
+          "endpointType" : "rest",
+          "endpointContentType" : "json",
+          "endpointProperties" : { },
+          "gateways" : [ {
+            "gatewayId" : "TheGateway"
+          } ],
+          "publicAPI" : true,
+          "plans" : [ {
+            "planId" : "GOLD",
+            "version" : "1.0"
+          } ],
+          "version" : "1.0",
+          "createdBy" : "admin",
+          "createdOn" : "2017-04-25T09:43:16Z",
+          "modifiedBy" : "admin",
+          "modifiedOn" : "2017-04-25T09:43:57Z",
+          "publishedOn" : "2017-04-25T09:44:00Z",
+          "parsePayload" : false
+        },
+        "Policies" : [ {
+          "id" : 1738,
+          "type" : "Api",
+          "organizationId" : "ingenious",
+          "entityId" : "api",
+          "entityVersion" : "1.0",
+          "name" : "Cust Host Policy",
+          "configuration" : "{\"requestHeader\":\"apiman\",\"responseHeader\":\"apiman\"}",
+          "createdBy" : "admin",
+          "createdOn" : "2017-04-25T09:43:57Z",
+          "modifiedBy" : "admin",
+          "modifiedOn" : "2017-04-25T09:43:57Z",
+          "definition" : {
+            "id" : "ingenioust-policy",
+            "templates" : [ ],
+            "deleted" : false
+          },
+          "orderIndex" : 1
+        } ]
+      } ]
+    } ],
+    "Clients" : [ ],
+    "Audits" : [ {
+      "id" : 1727,
+      "who" : "admin",
+      "organizationId" : "ingenious",
+      "entityType" : "Organization",
+      "createdOn" : "2017-04-25T09:42:59Z",
+      "what" : "Create"
+    }, {
+      "id" : 1729,
+      "who" : "admin",
+      "organizationId" : "ingenious",
+      "entityType" : "Plan",
+      "entityId" : "GOLD",
+      "createdOn" : "2017-04-25T09:43:07Z",
+      "what" : "Create"
+    }, {
+      "id" : 1731,
+      "who" : "admin",
+      "organizationId" : "ingenious",
+      "entityType" : "Plan",
+      "entityId" : "GOLD",
+      "entityVersion" : "1.0",
+      "createdOn" : "2017-04-25T09:43:07Z",
+      "what" : "Create"
+    }, {
+      "id" : 1732,
+      "who" : "admin",
+      "organizationId" : "ingenious",
+      "entityType" : "Plan",
+      "entityId" : "GOLD",
+      "entityVersion" : "1.0",
+      "createdOn" : "2017-04-25T09:43:09Z",
+      "what" : "Lock"
+    }, {
+      "id" : 1733,
+      "who" : "admin",
+      "organizationId" : "ingenious",
+      "entityType" : "Api",
+      "entityId" : "api",
+      "createdOn" : "2017-04-25T09:43:16Z",
+      "what" : "Create"
+    }, {
+      "id" : 1735,
+      "who" : "admin",
+      "organizationId" : "ingenious",
+      "entityType" : "Api",
+      "entityId" : "api",
+      "entityVersion" : "1.0",
+      "createdOn" : "2017-04-25T09:43:16Z",
+      "what" : "Create"
+    }, {
+      "id" : 1736,
+      "who" : "admin",
+      "organizationId" : "ingenious",
+      "entityType" : "Api",
+      "entityId" : "api",
+      "entityVersion" : "1.0",
+      "createdOn" : "2017-04-25T09:43:40Z",
+      "what" : "Update",
+      "data" : "{\"changes\":[{\"name\":\"endpoint\",\"before\":null,\"after\":\"http://httpbin.org/headers\"},{\"name\":\"endpointType\",\"before\":null,\"after\":\"rest\"},{\"name\":\"endpointContentType\",\"before\":null,\"after\":\"json\"}]}"
+    }, {
+      "id" : 1737,
+      "who" : "admin",
+      "organizationId" : "ingenious",
+      "entityType" : "Api",
+      "entityId" : "api",
+      "entityVersion" : "1.0",
+      "createdOn" : "2017-04-25T09:43:45Z",
+      "what" : "Update",
+      "data" : "{\"changes\":[{\"name\":\"plans\",\"before\":\"\",\"after\":\"GOLD:1.0\"},{\"name\":\"publicAPI\",\"before\":\"false\",\"after\":\"true\"}]}"
+    }, {
+      "id" : 1739,
+      "who" : "admin",
+      "organizationId" : "ingenious",
+      "entityType" : "Api",
+      "entityId" : "api",
+      "entityVersion" : "1.0",
+      "createdOn" : "2017-04-25T09:43:57Z",
+      "what" : "AddPolicy",
+      "data" : "{\"policyDefId\":\"ingenioust-policy\"}"
+    }, {
+      "id" : 1740,
+      "who" : "admin",
+      "organizationId" : "ingenious",
+      "entityType" : "Api",
+      "entityId" : "api",
+      "entityVersion" : "1.0",
+      "createdOn" : "2017-04-25T09:44:00Z",
+      "what" : "Publish"
+    } ]
+  } ]
+}

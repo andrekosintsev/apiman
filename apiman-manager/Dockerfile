@@ -32,6 +32,9 @@ ADD postgresql-9.3-1102-jdbc41.jar $JBOSS_HOME/standalone/deployments
 # Add apiman-ds_postgresql.xml
 ADD apiman-ds.xml $JBOSS_HOME/standalone/deployments
 
+# Add apiman-gw-ds for metrics
+ADD apiman-gw-ds.xml $JBOSS_HOME/standalone/deployments
+
 # Add modules.xml.xml
 ADD modules.xml $JBOSS_HOME/standalone/deployments
 
