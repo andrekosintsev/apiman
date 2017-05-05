@@ -37,7 +37,7 @@ ADD apiman-ds.xml $JBOSS_HOME/standalone/deployments
 ADD modules.xml $JBOSS_HOME/standalone/deployments
 
 #RUN mkdir -p $JBOSS_HOME/probe
-ADD check.sh 
+ADD check.sh .
 RUN chmod +x check.sh
 
 # Set the default command to run on boot
