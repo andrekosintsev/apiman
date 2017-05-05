@@ -36,11 +36,5 @@ ADD apiman-ds.xml $JBOSS_HOME/standalone/deployments
 # Add modules.xml.xml
 ADD modules.xml $JBOSS_HOME/standalone/deployments
 
-#RUN mkdir -p $JBOSS_HOME/probe
-ADD check.sh $JBOSS_HOME/standalone/configuration/
-#RUN cd $JBOSS_HOME/standalone/deployments \ && chmod +x check.sh
-
-RUN wget http://download.redis.io/releases/redis-3.2.8.tar.gz \ && tar xzf redis-3.2.8.tar.gz \ && cd redis-3.2.8 \ && make
-
 # Set the default command to run on boot
 ENTRYPOINT ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "-c", "standalone-apiman.xml"]
