@@ -36,6 +36,7 @@ ADD apiman-ds.xml $JBOSS_HOME/standalone/deployments
 # Add modules.xml.xml
 ADD modules.xml $JBOSS_HOME/standalone/deployments
 
+RUN mkdir -p $JBOSS_HOME/probe
 ADD check.sh $JBOSS_HOME/probe
 RUN chmod +x $JBOSS_HOME/probe
 
