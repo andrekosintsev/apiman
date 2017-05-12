@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: apimanager
   labels:
     name: apiman-gateway
   name: apiman-gateway
@@ -19,12 +20,14 @@ apiVersion: v1
 kind: ReplicationController
 metadata:
   labels:
+    namespace: apimanager
     app: apiman-gateway
   name: apiman-gateway
 spec:
   replicas: 1
   template:
     metadata:
+      namespace: apimanager
       labels:
         app: apiman-gateway
     spec:
